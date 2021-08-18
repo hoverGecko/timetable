@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/hku-timetable/static/css/main.01a1fa10.chunk.css",
-    "main.js": "/hku-timetable/static/js/main.4a9ff392.chunk.js",
-    "main.js.map": "/hku-timetable/static/js/main.4a9ff392.chunk.js.map",
+    "main.js": "/hku-timetable/static/js/main.a3d3c35c.chunk.js",
+    "main.js.map": "/hku-timetable/static/js/main.a3d3c35c.chunk.js.map",
     "runtime-main.js": "/hku-timetable/static/js/runtime-main.fca1e9eb.js",
     "runtime-main.js.map": "/hku-timetable/static/js/runtime-main.fca1e9eb.js.map",
     "static/js/2.e07a77c2.chunk.js": "/hku-timetable/static/js/2.e07a77c2.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.fca1e9eb.js",
     "static/js/2.e07a77c2.chunk.js",
     "static/css/main.01a1fa10.chunk.css",
-    "static/js/main.4a9ff392.chunk.js"
+    "static/js/main.a3d3c35c.chunk.js"
   ]
 }
