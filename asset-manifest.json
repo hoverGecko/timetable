@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/hku-timetable/static/css/main.01a1fa10.chunk.css",
-    "main.js": "/hku-timetable/static/js/main.a3d3c35c.chunk.js",
-    "main.js.map": "/hku-timetable/static/js/main.a3d3c35c.chunk.js.map",
+    "main.css": "/hku-timetable/static/css/main.52966147.chunk.css",
+    "main.js": "/hku-timetable/static/js/main.54fa02b9.chunk.js",
+    "main.js.map": "/hku-timetable/static/js/main.54fa02b9.chunk.js.map",
     "runtime-main.js": "/hku-timetable/static/js/runtime-main.fca1e9eb.js",
     "runtime-main.js.map": "/hku-timetable/static/js/runtime-main.fca1e9eb.js.map",
     "static/js/2.e07a77c2.chunk.js": "/hku-timetable/static/js/2.e07a77c2.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.be6af734.chunk.js": "/hku-timetable/static/js/3.be6af734.chunk.js",
     "static/js/3.be6af734.chunk.js.map": "/hku-timetable/static/js/3.be6af734.chunk.js.map",
     "index.html": "/hku-timetable/index.html",
-    "static/css/main.01a1fa10.chunk.css.map": "/hku-timetable/static/css/main.01a1fa10.chunk.css.map",
+    "static/css/main.52966147.chunk.css.map": "/hku-timetable/static/css/main.52966147.chunk.css.map",
     "static/js/2.e07a77c2.chunk.js.LICENSE.txt": "/hku-timetable/static/js/2.e07a77c2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.fca1e9eb.js",
     "static/js/2.e07a77c2.chunk.js",
-    "static/css/main.01a1fa10.chunk.css",
-    "static/js/main.a3d3c35c.chunk.js"
+    "static/css/main.52966147.chunk.css",
+    "static/js/main.54fa02b9.chunk.js"
   ]
 }
