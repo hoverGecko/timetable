@@ -1,0 +1,9 @@
+{
+  "short_name": "hku-timetable",
+  "name": "HKU Course Timetable Planner",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
