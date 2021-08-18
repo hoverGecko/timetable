@@ -80,6 +80,7 @@ code {
   margin: 2px;
   width: max(75px, 6vw);
   height: max(50px, 3vh);
+  text-align: center;
 }
 
 .TimeSlotEmpty {
