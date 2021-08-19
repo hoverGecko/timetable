@@ -8,8 +8,6 @@ const Timetable = ({shownDays, fromTime, toTime, sem, selectedCourses}) => {
     const dayTimeString = JSON.stringify(new Array(24).fill([]));
     const dt = () => JSON.parse(dayTimeString);
     const dayTitles = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-    const getFromTime = () => fromTime > toTime ? 8 : fromTime;
-    const getToTime = () => fromTime > toTime ? 20 : toTime;
     const generateTimetable = () => {
         let timetable = {'MON':dt(), 'TUE':dt(), 'WED':dt(), 'THU':dt(), 'FRI':dt(), 'SAT':dt(), 'SUN':dt()};
         const daysToTime = (days, id) => {
