@@ -1,6 +1,7 @@
 import Course from './Course'
+import Options from './Options'
 
-const SelectedCourses = ({sem, selectedCourses, setSelectedCourses}) => {
+const SelectedCourses = ({shownDays, setShownDays, setFromTime, setToTime, sem, selectedCourses, setSelectedCourses, }) => {
     return (
         <div className="SelectedCourses">
             <div>{sem === 0 ? "First Semester" : sem === 1 ? "Second Semester" : "Summer Semester"}</div>
@@ -8,6 +9,7 @@ const SelectedCourses = ({sem, selectedCourses, setSelectedCourses}) => {
             <div className="Courses">
                 {selectedCourses[sem].map((id, ind) => <Course key={id + ind} id={id} sem={sem} selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses} withCheckBox={false}/>)}
             </div>
+            <Options shownDays={shownDays} setShownDays={setShownDays} setFromTime={setFromTime} setToTime={setToTime} />
         </div>
     );
 }

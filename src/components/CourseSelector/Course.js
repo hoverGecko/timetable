@@ -30,13 +30,25 @@ const Course = ({id, selectedCourses, setSelectedCourses, sem}) => {
         }
     }
     const tickCourse = event => {
-        if (!boxCheck) {
-            setBoxCheck(true);
-            setHovering(false);
+        if (hovering) {
+            if (!boxCheck) {
+                setBoxCheck(true);
+                setHovering(false);
+            }
+            else {
+                setSelectedCourses(removeCourse);
+                setBoxCheck(false);
+            }
         }
         else {
-            setSelectedCourses(removeCourse);
-            setBoxCheck(false);
+            if (!boxCheck) {
+                setBoxCheck(true);
+                setSelectedCourses(addCourse);
+            }
+            else {
+                setBoxCheck(false);
+                setSelectedCourses(removeCourse);
+            }
         }
     }
 

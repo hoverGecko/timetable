@@ -1,10 +1,15 @@
 import Day from './Day'
 import courses from '../courses.json'
 
-const Timetable = ({fromTime, toTime, sem, selectedCourses}) => {
+const Timetable = ({shownDays, fromTime, toTime, sem, selectedCourses}) => {
+    console.log(fromTime + ", " + toTime);
+    console.log(fromTime >= toTime);
+    if (fromTime >= toTime) return <div>Error: From Hour must be smaller than To Hour in Options.</div>
     const dayTimeString = JSON.stringify(new Array(24).fill([]));
     const dt = () => JSON.parse(dayTimeString);
     const dayTitles = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+    const getFromTime = () => fromTime > toTime ? 8 : fromTime;
+    const getToTime = () => fromTime > toTime ? 20 : toTime;
     const generateTimetable = () => {
         let timetable = {'MON':dt(), 'TUE':dt(), 'WED':dt(), 'THU':dt(), 'FRI':dt(), 'SAT':dt(), 'SUN':dt()};
         const daysToTime = (days, id) => {
@@ -39,7 +44,7 @@ const Timetable = ({fromTime, toTime, sem, selectedCourses}) => {
     return (
         <div className="Timetable">
             <DayTime />
-            {dayTitles.map(d => <Day key={d} fromTime={fromTime} toTime={toTime} day={d} times={timetable[d]} />)}
+            {dayTitles.map((d, ind) => shownDays[ind] && <Day key={d} fromTime={fromTime} toTime={toTime} day={d} times={timetable[d]} />)}
         </div>
     );
 }

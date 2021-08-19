@@ -32,14 +32,14 @@ code {
   flex-direction: column;
 }
 
-.Sem, .SemSelected {
+.Sem, .SemSelected, .SetShownDaysBoxOn, .SetShownDaysBoxOff {
   cursor: pointer;
   padding: 3px;
   background: lightblue;
   border: 1px solid black;
 }
 
-.SemSelected {
+.SemSelected, .SetShownDaysBoxOn {
   background: lightgreen;
 }
 
@@ -54,6 +54,15 @@ code {
   display: flex;
   flex-direction: column;
   float: left;
+}
+
+.Options {
+  display: flex;
+  flex-direction: column;
+}
+
+.SetShownDays {
+  display: flex;
 }
 
 .Courses {
