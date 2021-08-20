@@ -9,7 +9,7 @@ const SelectedCourses = ({shownDays, setShownDays, setFromTime, setToTime, sem, 
             <div className="Courses">
                 {selectedCourses[sem].map((id, ind) => <Course key={id + ind} id={id} sem={sem} selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses} withCheckBox={false}/>)}
             </div>
-            <Options shownDays={shownDays} setShownDays={setShownDays} setFromTime={setFromTime} setToTime={setToTime} />
+            <Options selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses} shownDays={shownDays} setShownDays={setShownDays} setFromTime={setFromTime} setToTime={setToTime} />
         </div>
     );
 }

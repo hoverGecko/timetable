@@ -16,8 +16,8 @@ const CourseSelector = ({sem, setSem, selectedCourses, setSelectedCourses}) => {
     const searchRes = Object.keys(courses[sem]).sort().filter(id => fitSearch(searchTerm.toUpperCase(), id))
     return (
         <div className="CourseSelector">
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <SemSelector sem={sem} setSem={setSem} />
+            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <div className="ShowingTopResults">{searchRes.length > maxEntries ? "Showing top " + maxEntries  + " results." : "Showing all " + searchRes.length + " results."}</div>
             <div className="Courses">
                 {
