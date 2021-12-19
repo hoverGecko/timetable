@@ -11,7 +11,7 @@ function App() {
   const [fromTime, setFromTime] = useState(8);
   const [toTime, setToTime] = useState(20);
   const version = "v0.1.2";
-  const lastUploaded = "2021/8/20";
+  const lastUploaded = "2021/12/19";
   // useEffect(() => console.log(selectedCourses));
   return (
     <div className="App">
