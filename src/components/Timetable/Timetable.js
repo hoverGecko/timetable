@@ -1,9 +1,6 @@
 import Day from './Day'
-import courses from '../courses.json'
 
-const Timetable = ({shownDays, fromTime, toTime, sem, selectedCourses}) => {
-    console.log(fromTime + ", " + toTime);
-    console.log(fromTime >= toTime);
+const Timetable = ({shownDays, fromTime, toTime, sem, selectedCourses, courses}) => {
     if (fromTime >= toTime) return <div>Error: From Hour must be smaller than To Hour in Options.</div>
     const dayTimeString = JSON.stringify(new Array(24).fill([]));
     const dt = () => JSON.parse(dayTimeString);

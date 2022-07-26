@@ -1,7 +1,8 @@
 const TimeSlot = ({coursesAtTimeSlot}) => {
+    let coursesNoDuplicate = [...new Set(coursesAtTimeSlot)];
     return (
-        <div className={coursesAtTimeSlot.length === 0 ? "TimeSlotEmpty" : coursesAtTimeSlot.length === 1 ? "TimeSlotFilled" : "TimeSlotConflicted"}>
-            {coursesAtTimeSlot.map((c, ind) => <div key={c + ind} className="TimeSlotCourse">{c}</div>)}
+        <div className={coursesNoDuplicate.length === 0 ? "TimeSlotEmpty" : coursesNoDuplicate.length === 1 ? "TimeSlotFilled" : "TimeSlotConflicted"}>
+            {coursesNoDuplicate.map((c, ind) => <div key={c + ind} className="TimeSlotCourse">{c}</div>)}
         </div>
     );
 }

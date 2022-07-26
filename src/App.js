@@ -3,22 +3,24 @@ import CourseSelector from './components/CourseSelector/CourseSelector';
 import SelectedCourses from './components/CourseSelector/SelectedCourses';
 import Timetable from './components/Timetable/Timetable';
 import BottomBar from './components/BottomBar'
+import coursesJson from './courses.json'
 
 function App() {
+  const [courses, setCourses] = useState(coursesJson);
   const [selectedCourses, setSelectedCourses] = useState([[],[],[]]);
   const [sem, setSem] = useState(0); // 0: First Semester, 1: Second Semester, 2: Summer Semester
   const [shownDays, setShownDays] = useState([true, true, true, true, true, true, true]);
   const [fromTime, setFromTime] = useState(8);
   const [toTime, setToTime] = useState(20);
-  const version = "v0.1.2";
-  const lastUploaded = "2021/12/19";
+  const version = "v0.2.0";
+  const lastUploaded = "2022/7/25";
   // useEffect(() => console.log(selectedCourses));
   return (
     <div className="App">
       <div className="Main">
-        <SelectedCourses shownDays={shownDays} setShownDays={setShownDays} setFromTime={setFromTime} setToTime={setToTime} sem={sem} selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses} />
-        <Timetable fromTime={fromTime} toTime={toTime} shownDays={shownDays} sem={sem} selectedCourses={selectedCourses} />
-        <CourseSelector sem={sem} setSem={setSem} selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses} />
+        <SelectedCourses shownDays={shownDays} setShownDays={setShownDays} setFromTime={setFromTime} setToTime={setToTime} sem={sem} selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses} setCourses={setCourses} courses={courses}/>
+        <Timetable fromTime={fromTime} toTime={toTime} shownDays={shownDays} sem={sem} selectedCourses={selectedCourses} courses={courses}/>
+        <CourseSelector sem={sem} setSem={setSem} selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses} courses={courses} />
       </div>
       <BottomBar version={version} lastUploaded={lastUploaded} />
     </div>

@@ -2,9 +2,8 @@ import { useState } from 'react';
 import Course from './Course'
 import SemSelector from './SemSelector';
 import SearchBar from './SearchBar'
-import courses from '../courses.json'
 
-const CourseSelector = ({sem, setSem, selectedCourses, setSelectedCourses}) => {
+const CourseSelector = ({sem, setSem, selectedCourses, setSelectedCourses, courses}) => {
     const maxEntries = 1000;
     const [searchTerm, setSearchTerm] = useState("");
     const fitSearch = (searchTerm, courseCode) => {
