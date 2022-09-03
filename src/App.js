@@ -3,10 +3,9 @@ import CourseSelector from './components/CourseSelector/CourseSelector';
 import SelectedCourses from './components/CourseSelector/SelectedCourses';
 import Timetable from './components/Timetable/Timetable';
 import BottomBar from './components/BottomBar'
-import coursesJson from './courses.json'
 
 function App() {
-  const [courses, setCourses] = useState(coursesJson);
+  const [courses, setCourses] = useState([{},{},{}]);
   const [selectedCourses, setSelectedCourses] = useState([[],[],[]]);
   const [sem, setSem] = useState(0); // 0: First Semester, 1: Second Semester, 2: Summer Semester
   const [shownDays, setShownDays] = useState([true, true, true, true, true, true, true]);
