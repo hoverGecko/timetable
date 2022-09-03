@@ -5,7 +5,7 @@ import Timetable from './components/Timetable/Timetable';
 import BottomBar from './components/BottomBar'
 
 function App() {
-  const [courses, setCourses] = useState([{},{},{}]);
+  const [courses, setCourses] = useState([{},{},{"year": "no timetable loaded"}]);
   const [selectedCourses, setSelectedCourses] = useState([[],[],[]]);
   const [sem, setSem] = useState(0); // 0: First Semester, 1: Second Semester, 2: Summer Semester
   const [shownDays, setShownDays] = useState([true, true, true, true, true, true, true]);
