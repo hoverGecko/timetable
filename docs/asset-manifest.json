@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/timetable/static/css/main.b8e36ada.css",
+    "main.js": "/timetable/static/js/main.bfbafbf8.js",
+    "static/js/787.0695c711.chunk.js": "/timetable/static/js/787.0695c711.chunk.js",
+    "index.html": "/timetable/index.html",
+    "main.b8e36ada.css.map": "/timetable/static/css/main.b8e36ada.css.map",
+    "main.bfbafbf8.js.map": "/timetable/static/js/main.bfbafbf8.js.map",
+    "787.0695c711.chunk.js.map": "/timetable/static/js/787.0695c711.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b8e36ada.css",
+    "static/js/main.bfbafbf8.js"
+  ]
+}
