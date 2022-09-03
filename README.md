@@ -1,2 +1,2 @@
 # HKU Timetable
-This is an interactive timetable for selecting HKU courses.
+An interactive timetable for selecting HKU courses.
