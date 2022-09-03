@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import * as XLSX from "xlsx";
 
-const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, setFromTime, setToTime, setCourses}) => {
+const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, setFromTime, setToTime, setCourses, courses}) => {
+    useEffect(() => load(), []);
     const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
     const SetShownDaysBox = ({shownDays, setShownDays, dayInd}) => {
         const toggleDay = event => {
@@ -26,7 +28,8 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         let sheetData = XLSX.utils.sheet_to_row_object_array(sheet);
         // console.log(sheetData);
 
-        let res = [{}, {}, {}]; // first sem, second sem, summer sem
+        let res = [{}, {}, {"year": sheetData[0]["TERM"].split("-")[0]}]; // first sem, second sem, summer sem (not used, used for storing date)
+        // console.log(res[2]["year"]);
         sheetData.forEach(course => {
             const determineDay = () => { // return array (e.g. ["MON"])
                 return ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].filter(day => day in course);
@@ -65,11 +68,27 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         }
         reader.readAsBinaryString(e.target.files[0]);
     }
-    const saveToCookie = () => {
+    const save = () => {
         let selectedCoursesStrings = selectedCourses.map(semCourses => semCourses.join(','));
-        document.cookie = "firstSemCourses=" + selectedCoursesStrings[0] + ";SameSite=Strict;path=/;";
-        document.cookie = "secondSemCourses=" + selectedCoursesStrings[1] + ";SameSite=Strict;path=/;";
-        document.cookie = "summerSemCourses=" + selectedCoursesStrings[2] + ";SameSite=Strict;path=/;";
+        localStorage.setItem("firstSemCourses", selectedCoursesStrings[0]);
+        localStorage.setItem("secondSemCourses", selectedCoursesStrings[1]);
+        localStorage.setItem("summerSemCourses", selectedCoursesStrings[2]);
+        if (courses !== [{}, {}, {}]) localStorage.setItem("courses", JSON.stringify(courses));
+    }
+    const load = () => {
+        let savedCourses = {};
+
+        ["firstSemCourses", "secondSemCourses", "summerSemCourses"].forEach(sem => {
+            let semCourses = localStorage.getItem(sem);
+            if (semCourses === "" || semCourses === null) savedCourses[sem] = [];
+            else savedCourses[sem] = semCourses.split(',');
+        });
+        
+        // console.log(savedCourses);
+        setSelectedCourses([savedCourses["firstSemCourses"], savedCourses["secondSemCourses"], savedCourses["summerSemCourses"]]);
+        
+        let storedCourses = localStorage.getItem("courses");
+        if (storedCourses !== null) setCourses(JSON.parse(storedCourses));
     }
     const loadFromCookie = () => {
         let cookies = document.cookie.split("; ");
@@ -81,11 +100,12 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             if (courses[0] !== "") savedCourses[semester] = courses; // since split empty string returns [""] instead of []
             else savedCourses[semester] = [];
         });
-        console.log(savedCourses);
-        setSelectedCourses([savedCourses["firstSemCourses"], savedCourses["secondSemCourses"], savedCourses["summerSemCourses"]]);
+        // console.log(savedCourses);
+        setSelectedCourses([savedCourses["firstSemCourses"], savedCourses["secondSemCourses"], [savedCourses["summerSemCourses"]]]);
     }
     return (
         <div className="Options">
+            <div>Timetable year: {courses[2]["year"]}</div>
             <div>Options: </div>
             <label>From Hour: </label>
             <input
@@ -107,10 +127,13 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             <div className="SetShownDays">
                 {days.map((_, ind) => <SetShownDaysBox shownDays={shownDays} setShownDays={setShownDays} dayInd={ind} />)}
             </div>
-            <label>Please select the <a href="https://intraweb.hku.hk/reserved_1/sis_student/sis/reference-materials/20220721/2022-23_class_timetable_20220725.xlsx">class timetable</a>. (in .xlsx format)</label>
+            <label>Change <a href="https://intraweb.hku.hk/reserved_1/sis_student/sis/SIS-class-timetable.html">class timetable</a> (.xlsx):</label>
             <input type="file" id="input" onChange={xlsxToJsonParser} accept=".xlsx"/>
-            <button className="SaveLoad" onClick={saveToCookie}>Save To Cookie</button>
-            <button className="SaveLoad" onClick={loadFromCookie}>Load From Cookie</button>
+            <button className="SaveLoad" onClick={save}>Save timetable</button>
+            <button className="SaveLoad" onClick={load}>Load timetable</button>
+            <button className="SaveLoad" onClick={loadFromCookie}>Load from cookies (legacy)</button>
+            <button className="SaveLoad" onClick={() => setSelectedCourses([[], [], []])}>Clear current selection</button>
+            <button className="SaveLoad" onClick={() => localStorage.clear()}>Clear local storage</button>
         </div>
     );
 }

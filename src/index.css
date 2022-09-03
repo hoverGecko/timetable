@@ -68,8 +68,8 @@ code {
 .Courses {
   background-color: lightblue;
   min-width: 8vw;
-  min-height: 60vh;
-  max-height: 60vh;
+  min-height: 40vh;
+  max-height: 65vh;
   overflow: auto;
 }
 
