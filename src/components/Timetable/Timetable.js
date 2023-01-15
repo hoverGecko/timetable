@@ -10,6 +10,7 @@ const Timetable = ({shownDays, fromTime, toTime, sem, selectedCourses, courses})
         const daysToTime = (days, id) => {
             const writeTime = (d, times, id) => {
                 times.forEach(t => {
+                    if (!t.startTime || !t.endTime) return;
                     for (let i = t.startTime; i !== t.endTime; ++i) {
                         timetable[d][i].push(id);
                     }

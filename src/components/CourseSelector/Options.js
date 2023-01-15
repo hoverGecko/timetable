@@ -53,9 +53,13 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
                 };
             }
             
+            let endTime = parseInt(course["END TIME"]);
+            if (!endTime) endTime = 8;
+            let startTime = parseInt(course["START TIME"]);
+            if (!startTime) startTime = endTime;
             let section = {
-                "startTime": parseInt(course["START TIME"]),
-                "endTime": parseInt(course["END TIME"]),
+                "startTime": startTime,
+                "endTime": endTime,
                 "venue": course["VENUE"]
             };
             if (day in res[sem][code]["days"] === false) res[sem][code]["days"][day] = [];
@@ -110,7 +114,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             <input
                     type="text" 
                     className="SetTimeBar" 
-                    placeholder="Default: 20"
+                    placeholder="Default: 22"
                     onChange={event => handleSetTime(event, setToTime)}
             >
             </input>

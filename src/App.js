@@ -10,7 +10,7 @@ function App() {
   const [sem, setSem] = useState(0); // 0: First Semester, 1: Second Semester, 2: Summer Semester
   const [shownDays, setShownDays] = useState([true, true, true, true, true, true, true]);
   const [fromTime, setFromTime] = useState(8);
-  const [toTime, setToTime] = useState(20);
+  const [toTime, setToTime] = useState(22);
   const version = "v0.2.1";
   const lastUploaded = "2023/01/15";
   // useEffect(() => console.log(selectedCourses));
