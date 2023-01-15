@@ -1,7 +1,7 @@
 const BottomBar = ({version, lastUploaded}) => {
     return (
         <div className="BottomBar">
-            {version}. Last uploaded on 2022/7/25. Inspired by CUTS. Local storage is used to store course selection and course information.
+            {version}. Last uploaded on {lastUploaded}. Inspired by CUTS. Local storage is used to store course selection and course information.
         </div>
     );
 }

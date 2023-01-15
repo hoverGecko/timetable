@@ -28,8 +28,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         let sheetData = XLSX.utils.sheet_to_row_object_array(sheet);
         // console.log(sheetData);
 
-        let res = [{}, {}, {"year": sheetData[0]["TERM"].split("-")[0]}]; // first sem, second sem, summer sem (not used, used for storing date)
-        // console.log(res[2]["year"]);
+        let res = [{}, {}, {}]; // first sem, second sem, summer sem (not used, used for storing date)
         sheetData.forEach(course => {
             const determineDay = () => { // return array (e.g. ["MON"])
                 return ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].filter(day => day in course);
@@ -38,13 +37,19 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             if (dayArray.length === 0) return;
             const day = dayArray[0];
 
-            let sem = parseInt(course["TERM"].slice(-1)) - 1; // 0: first sem, 1: second sem
+            let sem; // 0: first sem, 1: second sem, 2: summer sem
+            if (course["TERM"].includes("Sem 1")) sem = 0;
+            else if (course["TERM"].includes("Sem 2")) sem = 1;
+            else if (course["TERM"].includes("Sum Sem")) sem = 2;
+            else sem = undefined;
+
             let code = course["COURSE CODE"] + "-" + course["CLASS SECTION"];
 
             if (code in res[sem] === false) {
                 res[sem][code] = {
                     "days": {},
-                    "name": course["COURSE TITLE"]
+                    "name": course["COURSE TITLE"],
+                    "instructor": course["INSTRUCTOR"]
                 };
             }
             
@@ -56,7 +61,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             if (day in res[sem][code]["days"] === false) res[sem][code]["days"][day] = [];
             if (!(res[sem][code]["days"][day].includes(section))) res[sem][code]["days"][day].push(section);
         });
-        // console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res)); // DEBUG
         setCourses(res);
     }
     const xlsxToJsonParser = (e) => {
@@ -90,22 +95,8 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         let storedCourses = localStorage.getItem("courses");
         if (storedCourses !== null) setCourses(JSON.parse(storedCourses));
     }
-    const loadFromCookie = () => {
-        let cookies = document.cookie.split("; ");
-        if (cookies.length < 3) return;
-        let savedCourses = {};
-        cookies.forEach(cookieString => {
-            let [semester, coursesString] = cookieString.split('=');
-            let courses = coursesString.split(',');
-            if (courses[0] !== "") savedCourses[semester] = courses; // since split empty string returns [""] instead of []
-            else savedCourses[semester] = [];
-        });
-        // console.log(savedCourses);
-        setSelectedCourses([savedCourses["firstSemCourses"], savedCourses["secondSemCourses"], [savedCourses["summerSemCourses"]]]);
-    }
     return (
         <div className="Options">
-            <div>Timetable year: {courses[2]["year"]}</div>
             <div>Options: </div>
             <label>From Hour: </label>
             <input
@@ -129,11 +120,10 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             </div>
             <label>Change <a href="https://intraweb.hku.hk/reserved_1/sis_student/sis/SIS-class-timetable.html">class timetable</a> (.xlsx):</label>
             <input type="file" id="input" onChange={xlsxToJsonParser} accept=".xlsx"/>
-            <button className="SaveLoad" onClick={save}>Save timetable</button>
-            <button className="SaveLoad" onClick={load}>Load timetable</button>
-            <button className="SaveLoad" onClick={loadFromCookie}>Load from cookies (legacy)</button>
+            <button className="SaveLoad" onClick={save}>Save selected courses</button>
+            <button className="SaveLoad" onClick={load}>Load selected courses</button>
             <button className="SaveLoad" onClick={() => setSelectedCourses([[], [], []])}>Clear current selection</button>
-            <button className="SaveLoad" onClick={() => localStorage.clear()}>Clear local storage</button>
+            <button className="SaveLoad" onClick={() => localStorage.clear()}>Clear storage</button>
         </div>
     );
 }

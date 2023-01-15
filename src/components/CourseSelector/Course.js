@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Course = ({id, selectedCourses, setSelectedCourses, sem}) => {
+const Course = ({sem, id, title, selectedCourses, setSelectedCourses}) => {
     const [hovering, setHovering] = useState(false);
     const addCourse = (selectedCourses) => {
         if (typeof selectedCourses[sem].find(c => c === id) !== 'undefined') return selectedCourses;
@@ -53,7 +53,7 @@ const Course = ({id, selectedCourses, setSelectedCourses, sem}) => {
     }
 
     return (
-        <div className="Course" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className="Course" title={title} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <label className="CourseName">
                 {id}
                 {<input
