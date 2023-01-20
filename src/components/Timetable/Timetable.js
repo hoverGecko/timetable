@@ -1,13 +1,13 @@
 import Day from './Day'
 
-const Timetable = ({shownDays, fromTime, toTime, sem, selectedCourses, courses}) => {
+const Timetable = ({shownDays, fromTime, toTime, sem, selectedCourses, hoveredCourse, courses}) => {
     if (fromTime >= toTime) return <div>Error: From Hour must be smaller than To Hour in Options.</div>
     const dayTimeString = JSON.stringify(new Array(24).fill([]));
     const dt = () => JSON.parse(dayTimeString);
     const dayTitles = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
     const generateTimetable = () => {
         let timetable = {'MON':dt(), 'TUE':dt(), 'WED':dt(), 'THU':dt(), 'FRI':dt(), 'SAT':dt(), 'SUN':dt()};
-        const daysToTime = (days, id) => {
+        const writeDaysToTime = (days, id) => {
             const writeTime = (d, times, id) => {
                 times.forEach(t => {
                     if (!t.startTime || !t.endTime) return;
@@ -21,8 +21,11 @@ const Timetable = ({shownDays, fromTime, toTime, sem, selectedCourses, courses})
         // console.log(selectedCourses);
         // console.log(sem);
         selectedCourses[sem].forEach(c => {
-            daysToTime(courses[sem][c].days, c)
+            writeDaysToTime(courses[sem][c].days, c)
         });
+        if (hoveredCourse) writeDaysToTime(courses[sem][hoveredCourse].days, hoveredCourse);
+
+
         return timetable;
     }
     const timetable = generateTimetable();

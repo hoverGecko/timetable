@@ -15,14 +15,14 @@ code {
 
 button {
   margin-top: 2px;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  padding-top: 0.3vh;
+  padding-bottom: 0.3vh;
 }
 
 input[type='file'] {
   color: transparent;
   max-width: 100px;
-  font-size: 15px;
+  font-size: max(13px, 1vw);
 }
 
 .App {
@@ -49,6 +49,13 @@ input[type='file'] {
   padding: 3px;
   background: lightblue;
   border: 1px solid black;
+  font-size: max(10px, min(1em, 1vw));
+}
+
+.SetShownDaysBoxOn, .SetShownDaysBoxOff {
+  font-family: monospace, monospace;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
 }
 
 .SemSelected, .SetShownDaysBoxOn {
@@ -77,16 +84,32 @@ input[type='file'] {
   display: flex;
 }
 
-.Courses {
+.SelectedCoursesList, .SearchedCoursesList {
   background-color: lightblue;
   min-width: 8vw;
-  min-height: 40vh;
-  max-height: 65vh;
   overflow: auto;
+}
+
+.SelectedCoursesList {
+  min-height: 40vh;
+  max-height: 50vh;
+}
+
+.SearchedCoursesList {
+  min-height: 50vh;
+  max-height: 68vh;
+}
+
+.SearchBar {
+  max-width: 8vw;
 }
 
 .Timetable {
   display: flex;
+}
+
+.ShowingTopResults {
+  font-size: min(1em, 0.9vw);
 }
 
 .Day {
@@ -100,8 +123,9 @@ input[type='file'] {
   border: 1px solid black;
   margin: 2px;
   width: max(75px, 6vw);
-  height: max(50px, 3vh);
+  height: max(45px, 5vh);
   text-align: center;
+  overflow: hidden;
 }
 
 .TimeSlotEmpty {
@@ -139,13 +163,23 @@ input[type='file'] {
 }
 
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1400px) {
   .Main {
     width: 100%;
     margin: 0;
   }
 }
-@media screen and (max-width: 100px) {
+@media screen and (max-width: 1400px) {
+  .ShowingTopResults {
+    display: none;
+  }
+}
+@media screen and (max-width: 800px) {
+  .BottomBar {
+    display: none;
+  }
+}
+@media screen and (max-height: 700px) {
   .BottomBar {
     display: none;
   }

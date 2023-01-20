@@ -120,7 +120,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             </input>
             <label>Days to be shown in the timetable: </label>
             <div className="SetShownDays">
-                {days.map((_, ind) => <SetShownDaysBox shownDays={shownDays} setShownDays={setShownDays} dayInd={ind} />)}
+                {days.map((dayString, ind) => <SetShownDaysBox key={dayString + ind} shownDays={shownDays} setShownDays={setShownDays} dayInd={ind} />)}
             </div>
             <label>Change <a href="https://intraweb.hku.hk/reserved_1/sis_student/sis/SIS-class-timetable.html">class timetable</a> (.xlsx):</label>
             <input type="file" id="input" onChange={xlsxToJsonParser} accept=".xlsx"/>
