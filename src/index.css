@@ -173,7 +173,7 @@ input[type='file'] {
 }
 
 .TimeSlotTime {
-  font-size: max(1rem, 0.4vw);
+  font-size: max(0.8rem, 0.4vw);
   padding-right: 0.3rem;
   text-align: right;
   color: var(--timetable-text-color);
@@ -212,6 +212,11 @@ input[type='file'] {
   bottom: 0;
   width: 100%;
   padding: 2px;
+}
+
+.NoTimetableWarning {
+  font-size: 0.8em;
+  color: red;
 }
 
 
