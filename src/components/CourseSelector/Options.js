@@ -28,7 +28,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         let sheetData = XLSX.utils.sheet_to_row_object_array(sheet);
         // console.log(sheetData);
 
-        let res = [{}, {}, {}]; // first sem, second sem, summer sem (not used, used for storing date)
+        let res = [{}, {}, {}]; // first sem, second sem, summer sem
         sheetData.forEach(course => {
             const determineDay = () => { // return array (e.g. ["MON"])
                 return ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].filter(day => day in course);
