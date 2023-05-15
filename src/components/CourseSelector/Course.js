@@ -28,6 +28,7 @@ const Course = ({sem, id, title, selectedCourses, setSelectedCourses, setHovered
         if (boxCheck) {
             setBoxCheck(false);
             setSelectedCourses(removeCourse);
+            setHoveredCourse("");
         }
         else {
             setBoxCheck(true);
@@ -36,18 +37,16 @@ const Course = ({sem, id, title, selectedCourses, setSelectedCourses, setHovered
     }
 
     return (
-        <div className="Course" title={title} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <label className="CourseName">
-                {id}
-                {<input
-                    type="checkbox"
-                    className="CourseCheckbox"
-                    id={id} 
-                    onChange={tickCourse}
-                    checked={boxCheck}
-                />}
-            </label>
-        </div>
+        <label className="Course" title={title} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <span>{id}</span>
+            {<input
+                type="checkbox"
+                className="CourseCheckbox"
+                id={id} 
+                onChange={tickCourse}
+                checked={boxCheck}
+            />}
+        </label>
     );
 }
 

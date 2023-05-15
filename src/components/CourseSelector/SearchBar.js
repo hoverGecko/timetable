@@ -6,7 +6,7 @@ const SearchBar = ({searchTerm, setSearchTerm}) => {
         <input
             type="text" 
             className="SearchBar" 
-            placeholder="Search"
+            placeholder="Search (support regex)"
             onChange={handleInput}
         >
         </input>

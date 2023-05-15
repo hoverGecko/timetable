@@ -35,8 +35,8 @@ const Timetable = ({shownDays, fromTime, toTime, sem, selectedCourses, hoveredCo
         // console.log(JSON.stringify(timeArray));
         return (
             <div className="Day">
-                <div className="DayTitle">-</div>
-                {timeArray.map(t => <div key={t} className="TimeSlotEmpty">{t.toString() + ":30-" + (t+1).toString() + ":20"}</div>)}
+                <div className="DayTitle" style={{color: "white"}}>.</div>
+                {timeArray.map(t => <div key={t} className="TimeSlotTime">{(t < 10 ? '0' : '') + t.toString() + ":30-" + (t + 1< 10 ? '0' : '') + (t+1).toString() + ":20"}</div>)}
             </div>
         );
     }
