@@ -102,22 +102,26 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
     return (
         <div className="Options">
             <div>Options: </div>
-            <label>From Hour: </label>
-            <input
-                    type="text" 
+            <label>From Hour: 
+                <input
+                    type="number" 
                     className="SetTimeBar" 
-                    placeholder="Default: 8"
+                    placeholder="8"
+                    min="0" 
+                    max="22" 
                     onChange={event => handleSetTime(event, setFromTime)}
-            >
-            </input>
-            <label>To Hour: </label>
-            <input
-                    type="text" 
+                ></input>
+            </label>
+            <label>
+                To Hour: <input
+                    type="number" 
                     className="SetTimeBar" 
-                    placeholder="Default: 22"
+                    placeholder="22"
+                    min="1" 
+                    max="23" 
                     onChange={event => handleSetTime(event, setToTime)}
-            >
-            </input>
+                ></input>
+            </label>
             <label>Days to be shown in the timetable: </label>
             <div className="SetShownDays">
                 {days.map((dayString, ind) => <SetShownDaysBox key={dayString + ind} shownDays={shownDays} setShownDays={setShownDays} dayInd={ind} />)}
