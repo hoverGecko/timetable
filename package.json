@@ -1,6 +1,6 @@
 {
   "name": "hku_timetable",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "homepage": "https://hovergecko.github.io/timetable",
   "private": true,
   "dependencies": {

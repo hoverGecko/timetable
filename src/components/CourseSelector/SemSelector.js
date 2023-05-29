@@ -8,7 +8,7 @@ const SemButton = ({buttonSem, buttonSemName, sem, setSem}) => {
 
 const NoTimetableWarning = ({noTimetable}) => {
     return (
-        <div className="NoTimetableWarning" style={!noTimetable ? {display: 'none'} : {fontSize: '0.8em', color: 'red', maxWidth: "9vw"}}>
+        <div className="NoTimetableWarning" style={!noTimetable ? {display: 'none'} : null}>
             No valid timetable is currently loaded. 
             Upload a class timetable in the 
             "Change class timetable (.xlsx)" 
