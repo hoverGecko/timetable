@@ -12,8 +12,9 @@ function App() {
   const [shownDays, setShownDays] = useState([true, true, true, true, true, true, true]);
   const [fromTime, setFromTime] = useState(8);
   const [toTime, setToTime] = useState(22);
-  const version = "v0.2.4";
-  const lastUpdated = "2023/05/16";
+  const version = "v0.2.5";
+  const lastUpdated = "2023/07/25";
+  const link = "https://github.com/hovergecko/timetable";
   // useEffect(() => console.log(selectedCourses));
   return (
     <div className="App">
@@ -22,7 +23,7 @@ function App() {
         <Timetable fromTime={fromTime} toTime={toTime} shownDays={shownDays} sem={sem} selectedCourses={selectedCourses} courses={courses} hoveredCourse={hoveredCourse} />
         <CourseSelector sem={sem} setSem={setSem} selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses} courses={courses} setHoveredCourse={setHoveredCourse} />
       </div>
-      <BottomBar version={version} lastUpdated={lastUpdated} />
+      <BottomBar version={version} lastUpdated={lastUpdated} link={link} />
     </div>
   );
 }

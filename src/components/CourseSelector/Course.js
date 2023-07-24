@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { Stack } from "@mui/material";
 
-const Course = ({sem, id, title, selectedCourses, setSelectedCourses, setHoveredCourse}) => {
+const Course = ({sem, id, title, selectedCourses, setSelectedCourses, setHoveredCourse, checkboxAlwaysOn = false}) => {
     const [boxCheck, setBoxCheck] = useState( // tick box is checked or not i.e. the course is selected or not
         typeof selectedCourses[sem].find(course => id === course) !== 'undefined'
     );
@@ -37,14 +38,32 @@ const Course = ({sem, id, title, selectedCourses, setSelectedCourses, setHovered
     }
 
     return (
-        <label className="Course" title={title} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <span>{id}</span>
+        <label 
+            className="Course" 
+            title={title} 
+            onMouseEnter={handleMouseEnter} 
+            onMouseLeave={handleMouseLeave} 
+            style={{paddingTop: 5, paddingBottom: 5}}
+        >
+            <Stack>
+                <span>{id}</span>
+                <span style={{
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden', 
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    fontSize: 'min(0.8rem, 1.6vw)',
+                    maxWidth: '15rem'
+                }}>
+                    {title}
+                </span>
+            </Stack>
             {<input
                 type="checkbox"
                 className="CourseCheckbox"
                 id={id} 
                 onChange={tickCourse}
-                checked={boxCheck}
+                checked={boxCheck || checkboxAlwaysOn}
             />}
         </label>
     );

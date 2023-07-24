@@ -9,10 +9,8 @@ const SemButton = ({buttonSem, buttonSemName, sem, setSem}) => {
 const NoTimetableWarning = ({noTimetable}) => {
     return (
         <div className="NoTimetableWarning" style={!noTimetable ? {display: 'none'} : null}>
-            No valid timetable is currently loaded. 
-            Upload a class timetable in the 
-            "Change class timetable (.xlsx)" 
-            option on the left.
+            No valid timetable loaded. <br/>
+            Obtain and upload a class timetable with the buttons on the left.
         </div>
     );
 }

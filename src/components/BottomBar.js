@@ -1,7 +1,7 @@
-const BottomBar = ({version, lastUpdated}) => {
+const BottomBar = ({version, lastUpdated, link}) => {
     return (
         <div className="BottomBar">
-            {version}. Last updated on {lastUpdated}. Inspired by CUTS. Local storage is used to store course selection and course information.
+            <a href={link}>{version}</a>. Last updated on {lastUpdated}. Inspired by CUTS. Local storage is used to store course selection and course information.
         </div>
     );
 }

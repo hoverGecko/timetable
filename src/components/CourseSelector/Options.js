@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import * as XLSX from "xlsx";
+import { compress, decompress } from "lz-string";
+import { Button, Stack } from "@mui/material";
+import { Save, Loop, Download, Upload } from "@mui/icons-material";
 
 const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, setFromTime, setToTime, setCourses, courses}) => {
     useEffect(() => load(), []);
@@ -63,10 +66,12 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
                 "venue": course["VENUE"]
             };
             if (day in res[sem][code]["days"] === false) res[sem][code]["days"][day] = [];
-            if (!(res[sem][code]["days"][day].includes(section))) res[sem][code]["days"][day].push(section);
+            res[sem][code]["days"][day].push(section);
         });
         // console.log(JSON.stringify(res)); // DEBUG
         setCourses(res);
+        clearStorage();
+        save();
     }
     const xlsxToJsonParser = (e) => {
         let reader = new FileReader();
@@ -82,7 +87,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         localStorage.setItem("firstSemCourses", selectedCoursesStrings[0]);
         localStorage.setItem("secondSemCourses", selectedCoursesStrings[1]);
         localStorage.setItem("summerSemCourses", selectedCoursesStrings[2]);
-        if (courses !== [{}, {}, {}]) localStorage.setItem("courses", JSON.stringify(courses));
+        localStorage.setItem("compressedCourses", compress(JSON.stringify(courses)));
     }
     const load = () => {
         let savedCourses = {};
@@ -93,12 +98,24 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             else savedCourses[sem] = semCourses.split(',');
         });
         
-        // console.log(savedCourses);
+        // console.debug(savedCourses);
         setSelectedCourses([savedCourses["firstSemCourses"], savedCourses["secondSemCourses"], savedCourses["summerSemCourses"]]);
+
+        const compressedCourses = localStorage.getItem("compressedCourses");
+        if (compressedCourses) setCourses(JSON.parse(decompress(compressedCourses)));
         
+        // For migration to compressedCourses
         let storedCourses = localStorage.getItem("courses");
-        if (storedCourses !== null) setCourses(JSON.parse(storedCourses));
+        if (storedCourses !== null) {
+            setCourses(courses);
+            localStorage.setItem("compressedCourses", compress(JSON.stringify(courses)));
+            localStorage.removeItem("courses");
+        }
     }
+    const clearStorage = () => {
+        localStorage.clear();
+    }
+    const buttonProps = {variant: 'contained', size: 'small'};
     return (
         <div className="Options">
             <div>Options: </div>
@@ -126,12 +143,33 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             <div className="SetShownDays">
                 {days.map((dayString, ind) => <SetShownDaysBox key={dayString + ind} shownDays={shownDays} setShownDays={setShownDays} dayInd={ind} />)}
             </div>
-            <label>Change <a href="https://intraweb.hku.hk/reserved_1/sis_student/sis/SIS-class-timetable.html">class timetable</a> (.xlsx):</label>
-            <input type="file" id="input" onChange={xlsxToJsonParser} accept=".xlsx"/>
-            <button className="SaveLoad" onClick={save}>Save selected courses</button>
-            <button className="SaveLoad" onClick={load}>Load selected courses</button>
-            <button className="SaveLoad" onClick={() => setSelectedCourses([[], [], []])}>Clear current selection</button>
-            <button className="SaveLoad" onClick={() => localStorage.clear()}>Clear storage</button>
+            <Stack spacing={0.5} sx={{mt: 1}}>
+                <Button 
+                    {...buttonProps}
+                    href="https://intraweb.hku.hk/reserved_1/sis_student/sis/SIS-class-timetable.html"
+                    target="_blank"
+                    startIcon={<Download />} 
+                    sx={{px: 3}}
+                >
+                    Get class timetable
+                </Button>
+                <input type="file" id="fileUpload" onChange={xlsxToJsonParser} accept=".xlsx" hidden/>
+                <label htmlFor='fileUpload'>
+                    <Button {...buttonProps} startIcon={<Upload />} sx={{width: "100%"}} component="span">
+                        Upload timetable (.xlsx)
+                    </Button>
+                </label>
+                <Stack direction="row" flex justifyContent="space-between" spacing={1}>
+                    <Button {...buttonProps} onClick={save} startIcon={<Save />} sx={{width: "50%"}}>Save</Button>
+                    <Button {...buttonProps} onClick={load} size="small" startIcon={<Loop />} sx={{width: '50%'}}>Load</Button>
+                </Stack>
+                <Button {...buttonProps} onClick={() => setSelectedCourses([[], [], []])}>
+                    Clear selection
+                </Button>
+                <Button {...buttonProps} onClick={() => localStorage.clear()}>
+                    Clear storage
+                </Button>
+            </Stack>
         </div>
     );
 }
