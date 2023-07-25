@@ -3,6 +3,7 @@ import * as XLSX from "xlsx";
 import { compress, decompress } from "lz-string";
 import { Button, Stack } from "@mui/material";
 import { Save, Loop, Download, Upload } from "@mui/icons-material";
+import { APP_VERSION } from "src/App";
 
 const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, setFromTime, setToTime, setCourses, courses}) => {
     useEffect(() => load(), []);
@@ -28,6 +29,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         setTime(t);
     }
     const setXlsxSheetToCourses = (sheet) => {
+        clearStorage();
         let sheetData = XLSX.utils.sheet_to_row_object_array(sheet);
         // console.log(sheetData);
 
@@ -88,28 +90,41 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         localStorage.setItem("secondSemCourses", selectedCoursesStrings[1]);
         localStorage.setItem("summerSemCourses", selectedCoursesStrings[2]);
         localStorage.setItem("compressedCourses", compress(JSON.stringify(courses)));
+        localStorage.setItem("version", APP_VERSION);
     }
     const load = () => {
-        let savedCourses = {};
+        try {    
+            let retrievedCourses = null;
 
-        ["firstSemCourses", "secondSemCourses", "summerSemCourses"].forEach(sem => {
-            let semCourses = localStorage.getItem(sem);
-            if (semCourses === "" || semCourses === null) savedCourses[sem] = [];
-            else savedCourses[sem] = semCourses.split(',');
-        });
-        
-        // console.debug(savedCourses);
-        setSelectedCourses([savedCourses["firstSemCourses"], savedCourses["secondSemCourses"], savedCourses["summerSemCourses"]]);
+            // For migration to compressedCourses
+            const storedCourses = localStorage.getItem("courses");
+            if (storedCourses) {
+                retrievedCourses = storedCourses;
+                localStorage.setItem("compressedCourses", compress(JSON.stringify(courses)));
+                localStorage.removeItem("courses");
+            }
+            
+            const compressedCourses = localStorage.getItem("compressedCourses");
+            if (compressedCourses) retrievedCourses = JSON.parse(decompress(compressedCourses));
+            
+            if (!Array.isArray(retrievedCourses)) {
+                localStorage.clear();
+                return;
+            }
 
-        const compressedCourses = localStorage.getItem("compressedCourses");
-        if (compressedCourses) setCourses(JSON.parse(decompress(compressedCourses)));
-        
-        // For migration to compressedCourses
-        let storedCourses = localStorage.getItem("courses");
-        if (storedCourses !== null) {
-            setCourses(courses);
-            localStorage.setItem("compressedCourses", compress(JSON.stringify(courses)));
-            localStorage.removeItem("courses");
+            let savedCourses = {};
+    
+            ["firstSemCourses", "secondSemCourses", "summerSemCourses"].forEach(sem => {
+                let semCourses = localStorage.getItem(sem);
+                if (semCourses === "" || semCourses === null) savedCourses[sem] = [];
+                else savedCourses[sem] = semCourses.split(',');
+            });
+            
+            // console.debug(savedCourses);
+            setSelectedCourses([savedCourses["firstSemCourses"], savedCourses["secondSemCourses"], savedCourses["summerSemCourses"]]);
+
+        } catch {
+            localStorage.clear();
         }
     }
     const clearStorage = () => {
