@@ -12,11 +12,11 @@ const SelectedCourses = ({shownDays, setShownDays, setFromTime, setToTime, sem, 
                     <div key={semIndex}>
                         <div style={{margin: 4}}>{name}:</div>
                         <div>
-                            {selectedCourses[semIndex].map((id, ind) => 
+                            {selectedCourses[semIndex].map((id, index) => 
                                 <Course 
-                                    key={sem + id + ind} 
+                                    key={sem + id + index} 
                                     id={id} 
-                                    sem={sem} 
+                                    sem={semIndex} 
                                     selectedCourses={selectedCourses} 
                                     setSelectedCourses={setSelectedCourses} 
                                     withCheckBox={false}
