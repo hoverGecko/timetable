@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import * as XLSX from "xlsx";
 import { compress, decompress } from "lz-string";
 import { Button, Stack } from "@mui/material";
-import { Save, Loop, Download, Upload } from "@mui/icons-material";
+import { Save, Loop, Download, Upload, Delete, DeleteForever } from "@mui/icons-material";
 import { APP_VERSION } from "src/App";
 
 const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, setFromTime, setToTime, setCourses, courses}) => {
@@ -72,8 +72,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         });
         // console.log(JSON.stringify(res)); // DEBUG
         setCourses(res);
-        clearStorage();
-        save();
+        localStorage.setItem("compressedCourses", compress(JSON.stringify(res)));
     }
     const xlsxToJsonParser = (e) => {
         let reader = new FileReader();
@@ -85,6 +84,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
         reader.readAsBinaryString(e.target.files[0]);
     }
     const save = () => {
+        localStorage.clear();
         let selectedCoursesStrings = selectedCourses.map(semCourses => semCourses.join(','));
         localStorage.setItem("firstSemCourses", selectedCoursesStrings[0]);
         localStorage.setItem("secondSemCourses", selectedCoursesStrings[1]);
@@ -111,23 +111,32 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
                 localStorage.clear();
                 return;
             }
+            setCourses(retrievedCourses);
 
-            let savedCourses = {};
-    
-            ["firstSemCourses", "secondSemCourses", "summerSemCourses"].forEach(sem => {
-                let semCourses = localStorage.getItem(sem);
-                if (semCourses === "" || semCourses === null) savedCourses[sem] = [];
-                else savedCourses[sem] = semCourses.split(',');
+            let savedCourses = ["firstSemCourses", "secondSemCourses", "summerSemCourses"].map((sem, index) => {
+                let semCourses = localStorage.getItem(sem)?.split(',');
+                if (!Array.isArray(semCourses) || semCourses.some(courseID => !(retrievedCourses[index]?.[courseID]))) {
+                    localStorage.setItem(sem, '');
+                    return [];
+                }
+                return semCourses;
             });
             
             // console.debug(savedCourses);
-            setSelectedCourses([savedCourses["firstSemCourses"], savedCourses["secondSemCourses"], savedCourses["summerSemCourses"]]);
+            setSelectedCourses(savedCourses);
 
-        } catch {
+        } catch (error) {
+            console.error(error);
             localStorage.clear();
         }
     }
+    const clearSelection = () => {
+        setSelectedCourses([[], [], []]);
+        setCourses([{}, {}, {}]);
+    }
     const clearStorage = () => {
+        setSelectedCourses([[], [], []]);
+        setCourses([{}, {}, {}]);
         localStorage.clear();
     }
     const buttonProps = {variant: 'contained', size: 'small'};
@@ -178,10 +187,10 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
                     <Button {...buttonProps} onClick={save} startIcon={<Save />} sx={{width: "50%"}}>Save</Button>
                     <Button {...buttonProps} onClick={load} size="small" startIcon={<Loop />} sx={{width: '50%'}}>Load</Button>
                 </Stack>
-                <Button {...buttonProps} onClick={() => setSelectedCourses([[], [], []])}>
+                <Button {...buttonProps} onClick={() => clearSelection([[], [], []])} startIcon={<Delete />}>
                     Clear selection
                 </Button>
-                <Button {...buttonProps} onClick={() => localStorage.clear()}>
+                <Button {...buttonProps} onClick={() => clearStorage()} startIcon={<DeleteForever />}>
                     Clear storage
                 </Button>
             </Stack>
