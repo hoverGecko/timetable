@@ -30,15 +30,19 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
     }
     const setXlsxSheetToCourses = (sheet) => {
         clearStorage();
-        let sheetData = XLSX.utils.sheet_to_row_object_array(sheet);
-        // console.log(sheetData);
+        let sheetData = XLSX.utils.sheet_to_json(sheet, {raw: false})
+            .map(row => {
+                const keyTrimmedRow = {};
+                Object.keys(row).forEach(key => keyTrimmedRow[key.trim()] = row[key]);
+                return keyTrimmedRow;
+            });
 
         let res = [{}, {}, {}]; // first sem, second sem, summer sem
+        const determineDay = (course) => { // return array (e.g. ["MON"])
+            return ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].filter(day => day in course);
+        }
         sheetData.forEach(course => {
-            const determineDay = () => { // return array (e.g. ["MON"])
-                return ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].filter(day => day in course);
-            }
-            const dayArray = determineDay();
+            const dayArray = determineDay(course);
             if (dayArray.length === 0) return;
             const day = dayArray[0];
 
