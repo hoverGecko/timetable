@@ -282,8 +282,14 @@ input[type='file'] {
   .BottomBar {
     display: none;
   }
+  .Course div {
+    max-width: 85%;
+  }
   .Course > Span {
     padding: 1vh 6vw 1vh 1vw;
+  }
+  .Course input {
+    max-width: 15%;
   }
   .Sem, .SemSelected {
     font-size: min(9px, 2.2vw);
