@@ -12,9 +12,9 @@ function App() {
   const [hoveredCourse, setHoveredCourse] = useState("");
   const [sem, setSem] = useState(0); // 0: First Semester, 1: Second Semester, 2: Summer Semester
   const [shownDays, setShownDays] = useState([true, true, true, true, true, true, true]);
-  const [fromTime, setFromTime] = useState(8);
+  const [fromTime, setFromTime] = useState(9);
   const [toTime, setToTime] = useState(22);
-  const lastUpdated = "2023/07/25";
+  const lastUpdated = "2025/08/05";
   const link = "https://github.com/hovergecko/timetable";
   // useEffect(() => console.log(selectedCourses));
   return (

@@ -63,7 +63,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
             }
             
             let endTime = parseInt(course["END TIME"]);
-            if (!endTime) endTime = 8;
+            if (!endTime) endTime = 9;
             let startTime = parseInt(course["START TIME"]);
             if (!startTime) startTime = endTime;
             let section = {
@@ -151,7 +151,7 @@ const Options = ({selectedCourses, setSelectedCourses, shownDays, setShownDays, 
                 <input
                     type="number" 
                     className="SetTimeBar" 
-                    placeholder="8"
+                    placeholder="9"
                     min="0" 
                     max="22" 
                     onChange={event => handleSetTime(event, setFromTime)}
